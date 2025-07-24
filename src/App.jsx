@@ -1,11 +1,15 @@
+"use client"
+
 import { Routes, Route } from "react-router-dom"
 import Header from "./components/UI/Header"
 import Home from "./pages/Home"
 import ShowDetail from "./pages/ShowDetail"
+import Favourites from "./pages/Favourites" // Import the new Favourites page
 import { PodcastProvider } from "./context/PodcastContext"
 import { AudioPlayerProvider } from "./context/AudioPlayerContext"
+import { FavoritesProvider } from "./context/FavoritesContext" // Import FavoritesProvider
 import AudioPlayer from "./components/UI/AudioPlayer"
-import { genres } from "./data" // Import genres here
+import { genres } from "./data"
 
 /**
  * Root component of the Podcast Explorer app.
@@ -22,17 +26,21 @@ import { genres } from "./data" // Import genres here
 export default function App() {
   return (
     <AudioPlayerProvider>
-      <>
-        <Header />
-        <PodcastProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {/* Pass genres to ShowDetail */}
-            <Route path={`/show/:id`} element={<ShowDetail genres={genres} />} />
-          </Routes>
-        </PodcastProvider>
-        <AudioPlayer />
-      </>
+      <FavoritesProvider>
+        {" "}
+        {/* Wrap with FavoritesProvider */}
+        <>
+          <Header />
+          <PodcastProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path={`/show/:id`} element={<ShowDetail genres={genres} />} />
+              <Route path="/favourites" element={<Favourites />} /> {/* New route for Favourites */}
+            </Routes>
+          </PodcastProvider>
+          <AudioPlayer />
+        </>
+      </FavoritesProvider>
     </AudioPlayerProvider>
   )
 }
