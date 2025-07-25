@@ -1,7 +1,7 @@
 "use client"
 
 import { useContext } from "react"
-import { AudioPlayerContext } from "../../context/AudioPlayerContext"
+import { AudioPlayerContext } from "../../context/AudioPlayerContext.js"
 import styles from "./AudioPlayer.module.css" // New CSS module
 
 /**

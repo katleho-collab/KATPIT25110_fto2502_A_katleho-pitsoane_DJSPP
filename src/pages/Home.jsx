@@ -3,9 +3,8 @@
 import { SearchBar, SortSelect, GenreFilter, PodcastGrid, Pagination, Loading, Error } from "../components"
 import styles from "./Home.module.css"
 import genres from "../data/genres.json"
-import { usePodcasts } from "../context/PodcastContext"
-import { useCallback } from "react" // Import useCallback
-import { setPage } from "../context/PodcastContext" // Declare the setPage variable
+import { PodcastContext } from "../context/PodcastContext"
+import { useCallback, useContext } from "react" // Import useCallback
 
 const Home = () => {
   const {
@@ -21,7 +20,8 @@ const Home = () => {
     sortKey,
     genre,
     allPodcastsCount,
-  } = usePodcasts()
+    setPage,
+  } = useContext(PodcastContext)
 
   // Function to clear all filters
   const clearFilters = useCallback(() => {

@@ -1,38 +1,8 @@
 "use client"
 
-import { createContext, useEffect, useState, useCallback } from "react"
-import { fetchPodcasts } from "../api/fetchPodcasts" // Corrected import path
-
-/**
- * React context for managing podcast-related state and filters.
- * Provides access to podcast data, pagination, filtering, and sorting.
- *
- * @typedef {Object} Podcast
- * @property {number} id - Unique identifier for the podcast.
- * @property {string} title - Title of the podcast.
- * @property {string} updated - ISO string of the last updated date.
- * @property {number[]} genres - Array of genre IDs.
- */
-
-/**
- * Context object used throughout the app to consume podcast data and control logic.
- * @type {React.Context<Object>}
- */
-export const PodcastContext = createContext()
-
-/**
- * List of available sorting options used in the UI.
- * Each option includes a `key` used for internal logic and a `label` for display.
- *
- * @type {{key: string, label: string}[]}
- */
-export const SORT_OPTIONS = [
-  { key: "default", label: "Default" },
-  { key: "date-desc", label: "Newest" },
-  { key: "date-asc", label: "Oldest" },
-  { key: "title-asc", label: "Title A → Z" },
-  { key: "title-desc", label: "Title Z → A" },
-]
+import { useEffect, useState, useCallback } from "react"
+import { fetchPodcasts } from "../api/fetchPodcasts"
+import { PodcastContext } from "./PodcastContext" // Import the context object
 
 /**
  * PodcastProvider component.
@@ -50,7 +20,7 @@ export function PodcastProvider({ children }) {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState("")
   const [sortKey, setSortKey] = useState("date-desc")
-  const [genre, setGenre] = useState([]) // Changed to array for multiple selections
+  const [genre, setGenre] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
@@ -82,7 +52,7 @@ export function PodcastProvider({ children }) {
       const maxRows = 2
       const columns = Math.floor(screenW / cardWidth)
       const calculatedPageSize = columns * maxRows
-      setPageSize(calculatedPageSize > 0 ? calculatedPageSize : 10) // Ensure pageSize is at least 10
+      setPageSize(calculatedPageSize > 0 ? calculatedPageSize : 10)
     }
     calculatePageSize()
     window.addEventListener("resize", calculatePageSize)
@@ -102,7 +72,6 @@ export function PodcastProvider({ children }) {
       data = data.filter((p) => p.title.toLowerCase().includes(q))
     }
     if (genre.length > 0) {
-      // Check if any genres are selected
       data = data.filter((p) => p.genres.some((gId) => genre.includes(gId)))
     }
     switch (sortKey) {
@@ -147,7 +116,7 @@ export function PodcastProvider({ children }) {
     totalPages,
     podcasts: paged,
     allPodcastsCount: filtered.length,
-    allPodcasts, // useful for detail pages
+    allPodcasts,
   }
   return <PodcastContext.Provider value={value}>{children}</PodcastContext.Provider>
 }
