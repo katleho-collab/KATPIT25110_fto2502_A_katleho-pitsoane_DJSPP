@@ -3,30 +3,14 @@
 import { useEffect, useState, useContext, useCallback } from "react"
 import { useParams, Link } from "react-router-dom"
 import { fetchShowDetails } from "../api/fetchPodcasts"
-import { Loading, Error, GenreTags } from "../components" // Import GenreTags
+import { Loading, Error, GenreTags } from "../components"
 import { AudioPlayerContext } from "../context/AudioPlayerContext"
-import { FavoritesContext } from "../context/FavoritesContext" // Import FavoritesContext
+import { FavoritesContext } from "../context/FavoritesContext"
 import { formatDate } from "../utils/formatDate"
 import styles from "./ShowDetail.module.css"
 
-/**
- * ShowDetail page component for displaying detailed information about a single podcast.
- *
- * - Extracts the podcast ID from the URL using React Router's `useParams`.
- * - Fetches podcast data from the API on mount using `fetchShowDetails`.
- * - Displays a loading state, error message, or the detailed podcast view.
- * - Integrates with `AudioPlayerContext` to allow playing episodes.
- * - Integrates with `FavoritesContext` to allow adding/removing episodes from favorites.
- *
- * Components used:
- * - `Loading` while fetching data
- * - `Error` if fetch fails
- * - `GenreTags` to display podcast genres
- *
- * @returns {JSX.Element} The detailed view of a selected podcast.
- */
 export default function ShowDetail() {
-  const { id } = useParams()
+  const { showId } = useParams()
   const [podcast, setPodcast] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -36,16 +20,11 @@ export default function ShowDetail() {
   const { addFavorite, removeFavorite, isFavorite } = useContext(FavoritesContext)
 
   useEffect(() => {
-    /**
-     * Fetches show details when the component mounts or the ID changes.
-     * @async
-     * @function loadShowDetails
-     */
     const loadShowDetails = async () => {
       setLoading(true)
       setError(null)
       try {
-        const data = await fetchShowDetails(id, setLoading, setError)
+        const data = await fetchShowDetails(showId, setLoading, setError)
         if (data) {
           setPodcast(data)
           if (data.seasons && data.seasons.length > 0) {
@@ -62,21 +41,12 @@ export default function ShowDetail() {
       }
     }
     loadShowDetails()
-  }, [id])
+  }, [showId])
 
-  /**
-   * Handles season selection change from dropdown.
-   * @param {React.ChangeEvent<HTMLSelectElement>} e - The select change event.
-   */
   const handleSeasonChange = (e) => {
     setSelectedSeasonIndex(Number(e.target.value))
   }
 
-  /**
-   * Handles playing an episode.
-   * @param {Object} episode - The episode object.
-   * @param {Object} season - The season object the episode belongs to.
-   */
   const handlePlayEpisode = useCallback(
     (episode, season) => {
       playEpisode({
@@ -90,12 +60,6 @@ export default function ShowDetail() {
     [playEpisode, podcast],
   )
 
-  /**
-   * Handles adding/removing an episode from favorites.
-   * @param {Object} episode - The episode object.
-   * @param {Object} season - The season object.
-   * @param {number} episodeIndex - The index of the episode within the season.
-   */
   const handleToggleFavorite = useCallback(
     (episode, season, episodeIndex) => {
       const favoriteId = `${podcast.id}-${season.season}-${episodeIndex}`
@@ -106,8 +70,8 @@ export default function ShowDetail() {
           id: favoriteId,
           showId: podcast.id,
           showTitle: podcast.title,
-          seasonIndex: season.season - 1, // Store 0-based index
-          episodeIndex: episodeIndex, // Store 0-based index
+          seasonIndex: season.season - 1,
+          episodeIndex: episodeIndex,
           episodeTitle: episode.title,
           episodeDescription: episode.description,
           episodeFile: episode.file,
@@ -118,9 +82,7 @@ export default function ShowDetail() {
     [addFavorite, isFavorite, podcast, removeFavorite],
   )
 
-  if (loading) {
-    return <Loading message="Loading podcast..." />
-  }
+  if (loading) return <Loading message="Loading podcast..." />
 
   if (error) {
     return (
@@ -163,7 +125,7 @@ export default function ShowDetail() {
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>GENRES</span>
               <div className={styles.genreTagsContainer}>
-                <GenreTags genres={podcast.genres} /> {/* Use GenreTags component */}
+                <GenreTags genres={podcast.genres} />
               </div>
             </div>
             <div className={styles.metaItem}>
