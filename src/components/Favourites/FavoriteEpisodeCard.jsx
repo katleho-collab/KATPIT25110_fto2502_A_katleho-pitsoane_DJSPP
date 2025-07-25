@@ -49,10 +49,10 @@ export default function FavoriteEpisodeCard({ episode }) {
         </button>
         <button
           onClick={handleRemove}
-          className={styles.favoriteButton}
+          className={styles.removeButton}
           aria-label={`Remove ${episode.episodeTitle} from favorites`}
         >
-          ❤️
+          Remove
         </button>
       </div>
     </div>

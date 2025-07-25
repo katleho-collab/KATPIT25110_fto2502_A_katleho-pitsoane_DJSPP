@@ -2,7 +2,7 @@
 
 import { useContext, useState, useMemo } from "react"
 import { FavoritesContext } from "../context/FavoritesContext"
-import FavoriteEpisodeCard from "../components/Favourites/FavoriteEpisodeCard"
+import { FavoriteEpisodeCard } from "../components/Favourites" // Corrected import
 import styles from "./Favourites.module.css"
 
 /**

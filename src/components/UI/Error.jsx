@@ -1,21 +1,21 @@
-import React from "react";
-import styles from "./Error.module.css";
+import styles from "./Error.module.css"
 
 /**
- * Error component.
- *
- * Displays an error message in a styled container.
- * Used to inform the user when data fetching or other operations fail.
+ * Error component displays an error message.
  *
  * @param {Object} props
  * @param {string} props.message - The error message to display.
- *
- * @returns {JSX.Element} A styled error message element.
+ * @param {React.ReactNode} props.children - Optional child elements (e.g., a "Back to Home" link).
+ * @returns {JSX.Element} The rendered error message.
  */
-export default function Error({ message }) {
+export default function Error({ message, children }) {
   return (
     <div className={styles.messageContainer}>
-      <div className={styles.error}>{message}</div>
+      <div className={styles.error}>
+        <h3>Error!</h3>
+        <p>{message}</p>
+        {children}
+      </div>
     </div>
-  );
+  )
 }

@@ -1,7 +1,8 @@
-import { formatDate } from "../../utils/formatDate";
-import { useNavigate } from "react-router-dom";
-import styles from "./PodcastCard.module.css";
-import GenreTags from "../UI/GenreTags";
+"use client"
+import { Link } from "react-router-dom" // Import Link
+import { formatDate } from "../../utils/formatDate"
+import { GenreTags } from "../UI" // Import GenreTags component
+import styles from "./PodcastCard.module.css"
 
 /**
  * Renders a single podcast preview card with image, title, number of seasons,
@@ -14,27 +15,23 @@ import GenreTags from "../UI/GenreTags";
  * @param {string} props.podcast.image - URL of the podcast image.
  * @param {number} props.podcast.seasons - Number of seasons available.
  * @param {string} props.podcast.updated - ISO date string for the last update.
- * @param {Array<Object>} props.genres - Array of genre objects for mapping IDs to titles.
+ * @param {Array<Object>} props.podcast.genres - Array of genre IDs for the podcast.
  *
  * @returns {JSX.Element} The rendered podcast card component.
  */
 export default function PodcastCard({ podcast }) {
-  const navigate = useNavigate();
-
-  const handleNavigate = (preview) => {
-    navigate(`/show/${preview.id}`, { state: { genres: preview.genres } });
-  };
-
   return (
-    <div className={styles.card} onClick={() => handleNavigate(podcast)}>
-      <img src={podcast.image} alt={podcast.title} />
-
-      <h3>{podcast.title}</h3>
-      <p className={styles.seasons}>{podcast.seasons} seasons</p>
-      <GenreTags genres={podcast.genres} />
-      <p className={styles.updatedText}>
-        Updated {formatDate(podcast.updated)}
-      </p>
-    </div>
-  );
+    // Wrap the card with a Link component
+    <Link to={`/show/${podcast.id}`} className={styles.cardLink}>
+      <div className={styles.card}>
+        <img src={podcast.image || "/placeholder.svg"} alt={podcast.title} className={styles.image} />
+        <div className={styles.content}>
+          <h3 className={styles.title}>{podcast.title}</h3>
+          <p className={styles.seasons}>{podcast.seasons} seasons</p>
+          <GenreTags genres={podcast.genres} /> {/* Use GenreTags component */}
+          <p className={styles.updatedText}>Updated {formatDate(podcast.updated)}</p>
+        </div>
+      </div>
+    </Link>
+  )
 }

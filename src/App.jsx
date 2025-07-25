@@ -9,7 +9,6 @@ import { PodcastProvider } from "./context/PodcastContext"
 import { AudioPlayerProvider } from "./context/AudioPlayerContext"
 import { FavoritesProvider } from "./context/FavoritesContext" // Import FavoritesProvider
 import AudioPlayer from "./components/UI/AudioPlayer"
-import { genres } from "./data"
 
 /**
  * Root component of the Podcast Explorer app.
@@ -34,7 +33,7 @@ export default function App() {
           <PodcastProvider>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path={`/show/:id`} element={<ShowDetail genres={genres} />} />
+              <Route path={`/show/:id`} element={<ShowDetail />} />
               <Route path="/favourites" element={<Favourites />} /> {/* New route for Favourites */}
             </Routes>
           </PodcastProvider>

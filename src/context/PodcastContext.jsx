@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState, useCallback } from "react"
 import { fetchPodcasts } from "../api/fetchPodcasts" // Corrected import path
 
 /**
@@ -50,7 +50,7 @@ export function PodcastProvider({ children }) {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState("")
   const [sortKey, setSortKey] = useState("date-desc")
-  const [genre, setGenre] = useState("all")
+  const [genre, setGenre] = useState([]) // Changed to array for multiple selections
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
@@ -81,8 +81,8 @@ export function PodcastProvider({ children }) {
       const cardWidth = 260
       const maxRows = 2
       const columns = Math.floor(screenW / cardWidth)
-      const pageSize = columns * maxRows
-      setPageSize(pageSize)
+      const calculatedPageSize = columns * maxRows
+      setPageSize(calculatedPageSize > 0 ? calculatedPageSize : 10) // Ensure pageSize is at least 10
     }
     calculatePageSize()
     window.addEventListener("resize", calculatePageSize)
@@ -95,14 +95,15 @@ export function PodcastProvider({ children }) {
    *
    * @returns {Podcast[]} Filtered and sorted list of podcasts.
    */
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let data = [...allPodcasts]
     if (search.trim()) {
       const q = search.toLowerCase()
       data = data.filter((p) => p.title.toLowerCase().includes(q))
     }
-    if (genre !== "all") {
-      data = data.filter((p) => p.genres.includes(Number(genre)))
+    if (genre.length > 0) {
+      // Check if any genres are selected
+      data = data.filter((p) => p.genres.some((gId) => genre.includes(gId)))
     }
     switch (sortKey) {
       case "title-asc":
@@ -122,7 +123,8 @@ export function PodcastProvider({ children }) {
         break
     }
     return data
-  }
+  }, [allPodcasts, search, genre, sortKey])
+
   const filtered = applyFilters()
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
   const currentPage = Math.min(page, totalPages)

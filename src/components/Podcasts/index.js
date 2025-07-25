@@ -1,3 +1,3 @@
-export { default as PodcastGrid } from "./PodcastGrid";
-export { default as PodcastCard } from "./PodcastCard";
-export { default as PodcastDetail } from "./PodcastDetail";
+export { default as PodcastCard } from "./PodcastCard"
+export { default as PodcastGrid } from "./PodcastGrid"
+// PodcastDetail.jsx will be removed, so it's not exported here
