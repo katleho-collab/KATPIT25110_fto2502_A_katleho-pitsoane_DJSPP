@@ -2,6 +2,7 @@
 
 import { Link } from "react-router-dom"
 import styles from "./Header.module.css" // Assuming you have a Header.module.css
+import ProfileIcon from "/public/assets/profile-icon.png" // Import the image
 
 /**
  * Header component for the Podcast Explorer app.
@@ -28,9 +29,9 @@ export default function Header() {
         </nav>
         {/* Placeholder for future icons like search, favorites, user profile */}
         <div className={styles.headerIcons}>
-          {/* <button className={styles.iconButton} aria-label="Search"><SearchIcon /></button> */}
-          {/* <button className={styles.iconButton} aria-label="Favourites"><HeartIcon /></button> */}
-          {/* <button className={styles.iconButton} aria-label="User Profile"><UserIcon /></button> */}
+          <button className={styles.iconButton} aria-label="User Profile">
+            <img src={ProfileIcon || "/placeholder.svg"} alt="Profile" className={styles.profileIcon} />
+          </button>
         </div>
       </div>
     </header>
