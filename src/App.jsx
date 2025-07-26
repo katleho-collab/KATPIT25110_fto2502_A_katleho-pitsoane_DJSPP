@@ -8,6 +8,7 @@ import { PodcastProvider } from "./context/PodcastProvider"
 import { AudioPlayerProvider } from "./context/AudioPlayerProvider"
 import { FavoritesProvider } from "./context/FavoritesProvider"
 import AudioPlayer from "./components/UI/AudioPlayer"
+import { ErrorBoundary } from "./components/ErrorBoundary"
 
 /**
  * Root component of the Podcast Explorer app.
@@ -28,11 +29,13 @@ export default function App() {
         <>
           <Header />
           <PodcastProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/show/:id" element={<ShowDetail />} />
-              <Route path="/favourites" element={<Favourites />} />
-            </Routes>
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/show/:id" element={<ShowDetail />} />
+                <Route path="/favourites" element={<Favourites />} />
+              </Routes>
+            </ErrorBoundary>
           </PodcastProvider>
           <AudioPlayer />
         </>
