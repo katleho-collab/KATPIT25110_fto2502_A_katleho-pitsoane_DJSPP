@@ -1,10 +1,7 @@
 "use client"
 
 import { Link } from "react-router-dom"
-import styles from "./Header.module.css"
-import ProfileIcon from "/assets/profile-icon.png" // Path is correct if assets is in public
-import SearchIcon from "/assets/search-icon.png" // New import for Search Icon
-import FavoriteIcon from "/assets/favorite-icon.png" // New import for Favorite Icon
+import styles from "./Header.module.css" // Assuming you have a Header.module.css
 
 /**
  * Header component for the Podcast Explorer app.
@@ -31,15 +28,9 @@ export default function Header() {
         </nav>
         {/* Placeholder for future icons like search, favorites, user profile */}
         <div className={styles.headerIcons}>
-          <button className={styles.iconButton} aria-label="Search">
-            <img src={SearchIcon || "/placeholder.svg"} alt="Search" className={styles.icon} />
-          </button>
-          <button className={styles.iconButton} aria-label="Favorites">
-            <img src={FavoriteIcon || "/placeholder.svg"} alt="Favorites" className={styles.icon} />
-          </button>
-          <button className={styles.iconButton} aria-label="User Profile">
-            <img src={ProfileIcon || "/placeholder.svg"} alt="Profile" className={styles.profileIcon} />
-          </button>
+          {/* <button className={styles.iconButton} aria-label="Search"><SearchIcon /></button> */}
+          {/* <button className={styles.iconButton} aria-label="Favourites"><HeartIcon /></button> */}
+          {/* <button className={styles.iconButton} aria-label="User Profile"><UserIcon /></button> */}
         </div>
       </div>
     </header>

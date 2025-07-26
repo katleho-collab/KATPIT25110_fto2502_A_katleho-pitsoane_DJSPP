@@ -21,16 +21,14 @@ import styles from "./PodcastCard.module.css"
  */
 export default function PodcastCard({ podcast }) {
   return (
-    // Wrap the card with a Link component
-    <Link to={`/show/${podcast.id}`} className={styles.cardLink}>
-      <div className={styles.card}>
-        <img src={podcast.image || "/placeholder.svg"} alt={podcast.title} className={styles.image} />
-        <div className={styles.content}>
-          <h3 className={styles.title}>{podcast.title}</h3>
-          <p className={styles.seasons}>{podcast.seasons} seasons</p>
-          <GenreTags genres={podcast.genres} /> {/* Use GenreTags component */}
-          <p className={styles.updatedText}>Updated {formatDate(podcast.updated)}</p>
-        </div>
+    // Apply the card styles directly to the Link component
+    <Link to={`/show/${podcast.id}`} className={styles.card}>
+      <img src={podcast.image || "/placeholder.svg"} alt={podcast.title} className={styles.image} />
+      <div className={styles.content}>
+        <h3 className={styles.title}>{podcast.title}</h3>
+        <p className={styles.seasons}>{podcast.seasons} seasons</p>
+        <GenreTags genres={podcast.genres} /> {/* Use GenreTags component */}
+        <p className={styles.updatedText}>Updated {formatDate(podcast.updated)}</p>
       </div>
     </Link>
   )

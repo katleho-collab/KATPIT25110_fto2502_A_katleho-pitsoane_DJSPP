@@ -1,8 +1,8 @@
 "use client"
 
 import { useContext } from "react"
-import { AudioPlayerContext } from "../../context/AudioPlayerContext.js"
-import { FavoritesContext } from "../../context/FavoritesContext.js"
+import { AudioPlayerContext } from "../../context/AudioPlayerContext"
+import { FavoritesContext } from "../../context/FavoritesContext"
 import { formatDate } from "../../utils/formatDate"
 import styles from "./FavoriteEpisodeCard.module.css" // New CSS module
 
