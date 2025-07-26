@@ -4,9 +4,9 @@ import Header from "./components/UI/Header"
 import Home from "./pages/Home"
 import ShowDetail from "./pages/ShowDetail"
 import Favourites from "./pages/Favourites"
-import { PodcastProvider } from "./context/PodcastContext"
-import { AudioPlayerProvider } from "./context/AudioPlayerContext"
-import { FavoritesProvider } from "./context/FavoritesContext"
+import { PodcastProvider } from "./context/PodcastProvider"
+import { AudioPlayerProvider } from "./context/AudioPlayerProvider"
+import { FavoritesProvider } from "./context/FavoritesProvider"
 import AudioPlayer from "./components/UI/AudioPlayer"
 
 /**

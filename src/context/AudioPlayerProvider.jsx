@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { AudioPlayerContext } from "./AudioPlayerContext" // Import the context object
+import { AudioPlayerContext } from "./AudioPlayerContext"
 
 /**
  * AudioPlayerProvider component.

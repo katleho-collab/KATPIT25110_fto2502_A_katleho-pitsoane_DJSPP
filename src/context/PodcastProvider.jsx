@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useContext } from "react"
 import { fetchPodcasts } from "../api/fetchPodcasts"
-import { PodcastContext } from "./PodcastContext" // Import the context object
+import { PodcastContext, SORT_OPTIONS } from "./PodcastContext"
 
 /**
  * PodcastProvider component.
@@ -20,7 +20,7 @@ export function PodcastProvider({ children }) {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState("")
   const [sortKey, setSortKey] = useState("date-desc")
-  const [genre, setGenre] = useState([])
+  const [genre, setGenre] = useState([]) // Changed to array for multiple selections
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
@@ -52,7 +52,7 @@ export function PodcastProvider({ children }) {
       const maxRows = 2
       const columns = Math.floor(screenW / cardWidth)
       const calculatedPageSize = columns * maxRows
-      setPageSize(calculatedPageSize > 0 ? calculatedPageSize : 10)
+      setPageSize(calculatedPageSize > 0 ? calculatedPageSize : 10) // Ensure pageSize is at least 10
     }
     calculatePageSize()
     window.addEventListener("resize", calculatePageSize)
@@ -72,6 +72,7 @@ export function PodcastProvider({ children }) {
       data = data.filter((p) => p.title.toLowerCase().includes(q))
     }
     if (genre.length > 0) {
+      // Check if any genres are selected
       data = data.filter((p) => p.genres.some((gId) => genre.includes(gId)))
     }
     switch (sortKey) {
@@ -116,7 +117,15 @@ export function PodcastProvider({ children }) {
     totalPages,
     podcasts: paged,
     allPodcastsCount: filtered.length,
-    allPodcasts,
+    allPodcasts, // useful for detail pages
   }
   return <PodcastContext.Provider value={value}>{children}</PodcastContext.Provider>
+}
+
+/**
+ * Custom hook to consume PodcastContext.
+ * Provides access to podcast state and controls.
+ */
+export function usePodcasts() {
+  return useContext(PodcastContext)
 }
