@@ -1,8 +1,8 @@
 "use client"
-import { Link } from "react-router-dom" // Import Link
-import { formatDate } from "../../utils/formatDate"
-import { GenreTags } from "../UI" // Import GenreTags component
-import styles from "./PodcastCard.module.css"
+import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/formatDate";
+import { GenreTags } from "../UI";
+import styles from "./PodcastCard.module.css";
 
 /**
  * Renders a single podcast preview card with image, title, number of seasons,
@@ -21,15 +21,18 @@ import styles from "./PodcastCard.module.css"
  */
 export default function PodcastCard({ podcast }) {
   return (
-    // Apply the card styles directly to the Link component
     <Link to={`/show/${podcast.id}`} className={styles.card}>
-      <img src={podcast.image || "/placeholder.svg"} alt={podcast.title} className={styles.image} />
+      <img
+        src={podcast.image || "/placeholder.svg"}
+        alt={podcast.title}
+        className={styles.image}
+      />
       <div className={styles.content}>
         <h3 className={styles.title}>{podcast.title}</h3>
         <p className={styles.seasons}>{podcast.seasons} seasons</p>
-        <GenreTags genres={podcast.genres} /> {/* Use GenreTags component */}
+        <GenreTags genres={podcast.genres} />
         <p className={styles.updatedText}>Updated {formatDate(podcast.updated)}</p>
       </div>
     </Link>
-  )
+  );
 }
