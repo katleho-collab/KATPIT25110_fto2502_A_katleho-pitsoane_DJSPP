@@ -1,6 +1,7 @@
 ﻿# 🎙️ BombsCast Podcast App
 
 A modern, feature-rich podcast application built with Next.js 15, TypeScript, and Tailwind CSS. BombsCast provides an immersive listening experience with a sleek dark theme, favorites management, and seamless audio playback.
+
 **🚀 Live Site**: [https://bombscast.vercel.app/](https://bombscast.vercel.app/)
 
 ## ✨ Features
